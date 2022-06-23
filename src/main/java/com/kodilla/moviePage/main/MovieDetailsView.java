@@ -1,7 +1,7 @@
 package com.kodilla.moviePage.main;
 
 
-import com.kodilla.moviePage.domain.ImdbMovieService;
+import com.kodilla.moviePage.service.ImdbMovieService;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H4;

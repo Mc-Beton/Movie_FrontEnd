@@ -1,5 +1,7 @@
-package com.kodilla.moviePage.domain;
+package com.kodilla.moviePage.service;
 
+import com.kodilla.moviePage.domain.ImdbMovie;
+import com.kodilla.moviePage.domain.ImdbMovieDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -25,12 +27,10 @@ public class ImdbMovieService {
     }
 
     public ImdbMovieDetails getMovieDetails(String id) {
-        System.out.println(id);
         try {
             URI url = UriComponentsBuilder
                     .fromHttpUrl("http://localhost:8080/v1/movies/movieImbd_details/" + id)
                     .build().encode().toUri();
-            System.out.println(url);
             ImdbMovieDetails movie = restTemplate.getForObject(url, ImdbMovieDetails.class);
             return movie;
         } catch (RestClientException e) {

@@ -1,7 +1,7 @@
 package com.kodilla.moviePage.main;
 
 import com.kodilla.moviePage.domain.ImdbMovie;
-import com.kodilla.moviePage.domain.ImdbMovieService;
+import com.kodilla.moviePage.service.ImdbMovieService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -14,8 +14,7 @@ import com.vaadin.flow.router.Route;
 @Route("movie")
 public class MovieView extends VerticalLayout {
 
-    private ImdbMovieService movieService = new ImdbMovieService();
-    private MovieDetailsView detailsView = new MovieDetailsView();
+    private final ImdbMovieService movieService = new ImdbMovieService();
     Grid<ImdbMovie> grid = new Grid<>(ImdbMovie.class);
 
     public MovieView() {
@@ -51,6 +50,13 @@ public class MovieView extends VerticalLayout {
                     UI.getCurrent().navigate("movie_details/" +
                             details.getId()));
             return button;
+        });
+        grid.addComponentColumn(details -> {
+            Button button2 = new Button("Watch it online");
+            button2.addClickListener(clickEvent ->
+                    UI.getCurrent().navigate("watch_movie/" +
+                            details.getId()));
+            return button2;
         });
         add(grid);
     }
