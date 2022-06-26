@@ -2,9 +2,11 @@ package com.kodilla.moviePage.main;
 
 import com.kodilla.moviePage.domain.MovieWatchSite;
 import com.kodilla.moviePage.service.UtellyService;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -40,9 +42,9 @@ public class MovieWatchView extends VerticalLayout implements BeforeEnterObserve
                 .setHeader("Logo");
         grid.addColumn(MovieWatchSite::getDisplay_name).setHeader("Site");
         grid.addComponentColumn(movie -> {
-            Anchor link = new Anchor(movie.getUrl(), movie.getDisplay_name());
-            addClickListener(e -> UI.getCurrent().navigate(link.getHref()));
-            return link;
+            Div wrapper = new Div();
+            wrapper.add(new Anchor(movie.getUrl(), new Text("Watch it")));
+            return wrapper;
         });
         add(grid);
     }
