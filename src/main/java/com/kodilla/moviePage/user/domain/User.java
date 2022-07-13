@@ -13,6 +13,7 @@ public class User {
     private String name;
     private String surname;
     private String username;
+    private String password;
     private String phoneNumber;
     private String email;
 }

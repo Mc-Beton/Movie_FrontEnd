@@ -2,6 +2,7 @@ package com.kodilla.moviePage.main;
 
 import com.kodilla.moviePage.domain.ImdbMovie;
 import com.kodilla.moviePage.service.ImdbMovieService;
+import com.kodilla.moviePage.user.service.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -13,13 +14,18 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("/:movieCat")
+@AnonymousAllowed
 public class MovieView extends VerticalLayout implements BeforeEnterObserver {
 
     private String showList;
     private final ImdbMovieService movieService = new ImdbMovieService();
     Grid<ImdbMovie> grid = new Grid<>(ImdbMovie.class);
+
+//    public MovieView(ImdbMovieService movieService){
+//        this.movieService = movieService;
 
     public void beforeEnter(BeforeEnterEvent event) {
         showList = event.getRouteParameters().get("movieCat").get();

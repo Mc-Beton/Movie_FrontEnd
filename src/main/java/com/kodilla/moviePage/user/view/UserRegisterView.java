@@ -9,67 +9,66 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-import javax.annotation.security.PermitAll;
-
-@Route("updateUserData")
-@PermitAll
-public class UserUpdateView extends VerticalLayout {
+@Route("user/register")
+@AnonymousAllowed
+public class UserRegisterView extends VerticalLayout {
 
     private UserService userService = new UserService();
 
-    TextField id = new TextField("Id");
     TextField name = new TextField("Name");
     TextField surname = new TextField("Surname");
     TextField username = new TextField("Username");
+    TextField password = new TextField("Password");
     EmailField email = new EmailField("Email");
     TextField phoneNumber = new TextField("PhoneNumber");
     Button save = new Button("Save");
     Button cancel = new Button("Cancel");
     Button back = new Button("Go back");
 
-    public UserUpdateView() {
-        add(new H2("Update users data"));
-        add(id,name,surname,username,email,phoneNumber,save,cancel,back);
+    public UserRegisterView() {
+        add(new H2("JOIN US"));
+        add(name,surname,username,password,email,phoneNumber,save,cancel,back);
 
-        updateUserData();
+        saveUserData();
         cancel();
         setSizeFull();
 
         validate();
     }
 
-    private void updateUserData() {
+    private void saveUserData() {
         save.addClickListener(event -> {
             User user = new User();
-            user.setId(Long.valueOf(id.getValue()));
             user.setName(name.getValue());
             user.setSurname(surname.getValue());
             user.setUsername(username.getValue());
+            user.setPassword(password.getValue());
             user.setPhoneNumber(phoneNumber.getValue());
             user.setEmail(email.getValue());
             userService.updateUser(user);
-            UI.getCurrent().navigate("user");
+            UI.getCurrent().navigate("movie");
         });
     }
 
     private void cancel(){
         cancel.addClickListener(e->{
-            id.clear();
             name.clear();
             surname.clear();
             username.clear();
+            password.clear();
             phoneNumber.clear();
             email.clear();
         });
-        back.addClickListener(event -> UI.getCurrent().navigate("user"));
+        back.addClickListener(event -> UI.getCurrent().navigate("movie"));
     }
 
     private void validate(){
-        id.setRequired(true);
         name.setRequired(true);
         surname.setRequired(true);
         username.setRequired(true);
+        password.setRequired(true);
         phoneNumber.setRequired(true);
     }
 }

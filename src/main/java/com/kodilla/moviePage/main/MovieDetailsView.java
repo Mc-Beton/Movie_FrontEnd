@@ -9,8 +9,10 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("movie_details/:movieId")
+@AnonymousAllowed
 public class MovieDetailsView extends HorizontalLayout implements BeforeEnterObserver {
 
     private String movieId;
@@ -32,6 +34,9 @@ public class MovieDetailsView extends HorizontalLayout implements BeforeEnterObs
         Image image = new Image(movieService.getMovieDetails(movieId).getImage(), "movie");
         add(image);
         VerticalLayout details = new VerticalLayout();
+        HorizontalLayout addButtons = new HorizontalLayout();
+
+        details.add(new HorizontalLayout());
         details.add(new H2(movieService.getMovieDetails(movieId).getTitle()));
         details.add(new H4(movieService.getMovieDetails(movieId).getPlot()));
         add(details);

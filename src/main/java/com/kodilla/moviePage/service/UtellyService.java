@@ -19,11 +19,11 @@ public class UtellyService {
     public List<MovieWatchSite> getWhereToWatch(String id) {
         try {
             URI url = UriComponentsBuilder
-                    .fromHttpUrl("http://localhost:8083/v1/movies/watchmovie/" + id)
+                    .fromHttpUrl("http://localhost:8080/v1/movies/watchmovie/" + id)
                     .build().encode().toUri();
             MovieWatchSite[] siteWatchList = restTemplate.getForObject(url, MovieWatchSite[].class);
             return Arrays.asList(siteWatchList);
-        } catch (RestClientException e) {
+        } catch (NullPointerException e) {
             return new ArrayList<>();
         }
     }

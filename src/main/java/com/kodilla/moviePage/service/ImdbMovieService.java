@@ -20,7 +20,7 @@ public class ImdbMovieService {
 
     public List<ImdbMovie> getPopular() {
         try {
-            ImdbMovie[] top250List = restTemplate.getForObject("http://localhost:8083/v1/movies/", ImdbMovie[].class);
+            ImdbMovie[] top250List = restTemplate.getForObject("http://localhost:8080/v1/movies/", ImdbMovie[].class);
             return Arrays.asList(Objects.requireNonNull(top250List));
         } catch (RestClientException e) {
             return new ArrayList<>();
@@ -29,7 +29,7 @@ public class ImdbMovieService {
 
     public List<ImdbMovie> getTop250() {
         try {
-            ImdbMovie[] top250List = restTemplate.getForObject("http://localhost:8083/v1/movies/top250", ImdbMovie[].class);
+            ImdbMovie[] top250List = restTemplate.getForObject("http://localhost:8080/v1/movies/top250", ImdbMovie[].class);
             return Arrays.asList(Objects.requireNonNull(top250List));
         } catch (RestClientException e) {
             return new ArrayList<>();
@@ -38,7 +38,7 @@ public class ImdbMovieService {
 
     public List<ImdbMovie> getSoon() {
         try {
-            ImdbMovie[] top250List = restTemplate.getForObject("http://localhost:8083/v1/movies/soon", ImdbMovie[].class);
+            ImdbMovie[] top250List = restTemplate.getForObject("http://localhost:8080/v1/movies/soon", ImdbMovie[].class);
             return Arrays.asList(Objects.requireNonNull(top250List));
         } catch (RestClientException e) {
             return new ArrayList<>();
@@ -47,7 +47,7 @@ public class ImdbMovieService {
 
     public List<ImdbMovie> getTopTV() {
         try {
-            ImdbMovie[] top250List = restTemplate.getForObject("http://localhost:8083/v1/movies/topTV", ImdbMovie[].class);
+            ImdbMovie[] top250List = restTemplate.getForObject("http://localhost:8080/v1/movies/topTV", ImdbMovie[].class);
             return Arrays.asList(Objects.requireNonNull(top250List));
         } catch (RestClientException e) {
             return new ArrayList<>();
@@ -57,7 +57,7 @@ public class ImdbMovieService {
     public ImdbMovieDetails getMovieDetails(String id) {
         try {
             URI url = UriComponentsBuilder
-                    .fromHttpUrl("http://localhost:8083/v1/movies/movieImbd_details/" + id)
+                    .fromHttpUrl("http://localhost:8080/v1/movies/movieImbd_details/" + id)
                     .build().encode().toUri();
             ImdbMovieDetails movie = restTemplate.getForObject(url, ImdbMovieDetails.class);
             return movie;
@@ -69,7 +69,7 @@ public class ImdbMovieService {
     public List<ImdbMovie> searchResult(String content) {
         try {
             URI url = UriComponentsBuilder
-                    .fromHttpUrl("http://localhost:8083/v1/movies/search/" + content)
+                    .fromHttpUrl("http://localhost:8080/v1/movies/search/" + content)
                     .build().encode().toUri();
             ImdbMovie[] searchList = restTemplate.getForObject(url, ImdbMovie[].class);
             return Arrays.asList(Objects.requireNonNull(searchList));

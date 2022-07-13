@@ -11,7 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 
-public class UserForm extends FormLayout {
+public class UserEditForm extends FormLayout {
 
     TextField name = new TextField("Name");
     TextField surname = new TextField("Surname");
@@ -23,7 +23,7 @@ public class UserForm extends FormLayout {
 
     UserService userService = new UserService();
 
-    public UserForm() {
+    public UserEditForm() {
         addClassName("user-add-form");
         validate();
 

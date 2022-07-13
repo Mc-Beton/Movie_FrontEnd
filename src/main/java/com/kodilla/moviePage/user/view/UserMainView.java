@@ -1,7 +1,7 @@
 package com.kodilla.moviePage.user.view;
 
 import com.kodilla.moviePage.user.domain.User;
-import com.kodilla.moviePage.user.domain.UserForm;
+import com.kodilla.moviePage.user.domain.UserEditForm;
 import com.kodilla.moviePage.user.service.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -14,7 +14,10 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 
+import javax.annotation.security.RolesAllowed;
+
 @Route("user")
+@RolesAllowed("ADMIN")
 public class UserMainView extends VerticalLayout {
 
     Grid<User> grid = new Grid<>(User.class);
@@ -24,7 +27,7 @@ public class UserMainView extends VerticalLayout {
     TextField name = new TextField();
 
     UserService userService;
-    UserForm userForm;
+    UserEditForm userForm;
 
     public UserMainView(UserService userService){
         this.userService = userService;
@@ -48,7 +51,7 @@ public class UserMainView extends VerticalLayout {
     }
 
     private void configureCustomerForm() {
-        userForm = new UserForm();
+        userForm = new UserEditForm();
         userForm.setWidth("25em");
     }
 
