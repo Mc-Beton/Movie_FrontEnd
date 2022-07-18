@@ -1,7 +1,4 @@
-package com.kodilla.moviePage.domain;
-
-import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Image;
+package com.kodilla.moviePage.movie.domain;
 
 import java.util.Base64;
 import java.util.Objects;

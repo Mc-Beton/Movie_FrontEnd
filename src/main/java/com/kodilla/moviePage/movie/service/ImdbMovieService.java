@@ -1,7 +1,7 @@
-package com.kodilla.moviePage.service;
+package com.kodilla.moviePage.movie.service;
 
-import com.kodilla.moviePage.domain.ImdbMovie;
-import com.kodilla.moviePage.domain.ImdbMovieDetails;
+import com.kodilla.moviePage.movie.domain.ImdbMovie;
+import com.kodilla.moviePage.movie.domain.ImdbMovieDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;

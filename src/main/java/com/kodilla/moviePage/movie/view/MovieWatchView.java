@@ -1,9 +1,8 @@
-package com.kodilla.moviePage.main;
+package com.kodilla.moviePage.movie.view;
 
-import com.kodilla.moviePage.domain.MovieWatchSite;
-import com.kodilla.moviePage.service.UtellyService;
+import com.kodilla.moviePage.movie.domain.MovieWatchSite;
+import com.kodilla.moviePage.movie.service.UtellyService;
 import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;

@@ -1,4 +1,4 @@
-package com.kodilla.moviePage.domain;
+package com.kodilla.moviePage.movie.domain;
 
 import java.util.Objects;
 

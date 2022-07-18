@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class MainLayout extends AppLayout {
 
-    private SecurityService securityService;
-
     public MainLayout(@Autowired SecurityService securityService) {
-        this.securityService = securityService;
 
         H1 logo = new H1("Vaadin CRM");
         logo.addClassName("logo");
@@ -23,8 +20,6 @@ public class MainLayout extends AppLayout {
         } else {
             header = new HorizontalLayout(logo);
         }
-
-        // Other page components omitted.
 
         addToNavbar(header);
     }

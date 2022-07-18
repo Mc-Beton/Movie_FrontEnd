@@ -1,7 +1,8 @@
 package com.kodilla.moviePage.user.view;
 
+import com.kodilla.moviePage.security.service.SecurityService;
 import com.kodilla.moviePage.user.domain.User;
-import com.kodilla.moviePage.user.domain.UserEditForm;
+import com.kodilla.moviePage.user.forms.UserEditForm;
 import com.kodilla.moviePage.user.service.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -13,21 +14,27 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
 
-@Route("user")
-@RolesAllowed("ADMIN")
+
+@Route("management/user")
+@PermitAll //TODO Fix permission only to ADMIN
 public class UserMainView extends VerticalLayout {
 
     Grid<User> grid = new Grid<>(User.class);
     TextField filterText = new TextField();
     TextField userToDelete = new TextField();
     Button goToMainMenu = new Button("Main menu");
+    Button logoutUser = new Button("Logout");
     TextField name = new TextField();
 
     UserService userService;
     UserEditForm userForm;
+
+    @Autowired
+    SecurityService securityService;
 
     public UserMainView(UserService userService){
         this.userService = userService;
@@ -82,8 +89,9 @@ public class UserMainView extends VerticalLayout {
         updateView.addClickListener(e-> UI.getCurrent().navigate("updateUserData"));
 
         goToMainMenu.addClickListener(event -> UI.getCurrent().navigate("movie"));
+        logoutUser.addClickListener(event -> securityService.logout());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, name, userToDelete, delete, updateView, goToMainMenu);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, name, userToDelete, delete, updateView, goToMainMenu,logoutUser);
         toolbar.addClassName("toolbar");
         return toolbar;
     }

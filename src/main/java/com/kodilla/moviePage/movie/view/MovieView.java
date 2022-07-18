@@ -1,7 +1,8 @@
-package com.kodilla.moviePage.main;
+package com.kodilla.moviePage.movie.view;
 
-import com.kodilla.moviePage.domain.ImdbMovie;
-import com.kodilla.moviePage.service.ImdbMovieService;
+import com.kodilla.moviePage.movie.domain.ImdbMovie;
+import com.kodilla.moviePage.security.service.SecurityService;
+import com.kodilla.moviePage.movie.service.ImdbMovieService;
 import com.kodilla.moviePage.user.service.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -15,23 +16,38 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Collections;
+import java.util.Objects;
 
 @Route("/:movieCat")
 @AnonymousAllowed
 public class MovieView extends VerticalLayout implements BeforeEnterObserver {
 
+    @Autowired
+    private SecurityService securityService;
+
+    @Autowired
+    private UserService userService;
+
     private String showList;
     private final ImdbMovieService movieService = new ImdbMovieService();
     Grid<ImdbMovie> grid = new Grid<>(ImdbMovie.class);
 
-//    public MovieView(ImdbMovieService movieService){
-//        this.movieService = movieService;
-
-    public void beforeEnter(BeforeEnterEvent event) {
-        showList = event.getRouteParameters().get("movieCat").get();
+    public MovieView(SecurityService securityService, UserService userService) {
+        this.securityService = securityService;
+        this.userService = userService;
         configureGrid();
         add(addMenuButtons());
         add(getContent());
+        setSizeFull();
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        showList = event.getRouteParameters().get("movieCat").get();
         setSizeFull();
         updateList(showList);
     }
@@ -79,10 +95,28 @@ public class MovieView extends VerticalLayout implements BeforeEnterObserver {
                             details.getId()));
             return button2;
         });
+        if (securityService.getAuthenticatedUser() != null &&
+                Objects.equals(securityService.getAuthenticatedUser().getAuthorities(), Collections.singleton(new SimpleGrantedAuthority("USER")))) {
+            grid.addComponentColumn(details -> {
+                Button button3 = new Button("Add to favorite");
+                button3.addClickListener(clickEvent ->
+                        userService.addMovieToFavList(securityService.getAuthenticatedUser().getUsername(), details.getId()));
+                return button3;
+            });
+        }
+        if (securityService.getAuthenticatedUser() != null && Objects.equals(securityService.getAuthenticatedUser().getAuthorities(), Collections.singleton(new SimpleGrantedAuthority("USER")))) {
+            grid.addComponentColumn(details -> {
+                Button button4 = new Button("Add to watch");
+                button4.addClickListener(clickEvent ->
+                        userService.addMovieToWatchList(securityService.getAuthenticatedUser().getUsername(), details.getId()));
+                return button4;
+            });
+        }
         add(grid);
     }
 
     private Component addMenuButtons() {
+        add(addLoginButtons());
         add(new H2("Welcome to this Custom Movie Site"));
         HorizontalLayout catogMovie = new HorizontalLayout();
         Button button1 = new Button("Most Popular");
@@ -99,13 +133,20 @@ public class MovieView extends VerticalLayout implements BeforeEnterObserver {
                 UI.getCurrent().navigate("soon"));
         Button button5 = new Button("User settings");
         button5.addClickListener(e ->
-                UI.getCurrent().navigate("user"));
+                UI.getCurrent().navigate("management/user"));
+        Button button6 = new Button("User details");
+        button5.addClickListener(e ->
+                UI.getCurrent().navigate("user/details"));
+
         catogMovie.add(button1);
         catogMovie.add(button2);
         catogMovie.add(button3);
         catogMovie.add(button4);
         catogMovie.add(addSearch());
-        catogMovie.add(button5);
+        if (securityService.getAuthenticatedUser() != null && Objects.equals(securityService.getAuthenticatedUser().getAuthorities(), Collections.singleton(new SimpleGrantedAuthority("ADMIN"))))
+            catogMovie.add(button5);
+        if (securityService.getAuthenticatedUser() != null && Objects.equals(securityService.getAuthenticatedUser().getAuthorities(), Collections.singleton(new SimpleGrantedAuthority("USER"))))
+            catogMovie.add(button6);
         return catogMovie;
     }
 
@@ -119,5 +160,24 @@ public class MovieView extends VerticalLayout implements BeforeEnterObserver {
         HorizontalLayout hl = new HorizontalLayout(searchField, button);
         hl.setDefaultVerticalComponentAlignment(Alignment.BASELINE);
         return hl;
+    }
+
+    private Component addLoginButtons() {
+        HorizontalLayout header;
+        if (securityService.getAuthenticatedUser() == null) {
+            Button login = new Button("Login", click ->
+                    UI.getCurrent().navigate("login"));
+            Button register = new Button("Register", click ->
+                    UI.getCurrent().navigate("user/register"));
+            header = new HorizontalLayout(register, login);
+        } else {
+            Button logout = new Button("Logout", click -> {
+                securityService.logout();
+                UI.getCurrent().navigate("movie");
+            });
+            header = new HorizontalLayout(logout);
+        }
+        header.setAlignItems(Alignment.END);
+        return header;
     }
 }

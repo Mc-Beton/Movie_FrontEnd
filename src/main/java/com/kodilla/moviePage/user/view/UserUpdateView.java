@@ -11,9 +11,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 
-@Route("updateUserData")
-@PermitAll
+@Route("user/updateUserData")
 public class UserUpdateView extends VerticalLayout {
 
     private UserService userService = new UserService();
@@ -29,6 +29,7 @@ public class UserUpdateView extends VerticalLayout {
     Button back = new Button("Go back");
 
     public UserUpdateView() {
+        setAlignItems(Alignment.CENTER);
         add(new H2("Update users data"));
         add(id,name,surname,username,email,phoneNumber,save,cancel,back);
 

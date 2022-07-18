@@ -1,5 +1,6 @@
-package com.kodilla.moviePage.user.domain;
+package com.kodilla.moviePage.user.forms;
 
+import com.kodilla.moviePage.user.domain.AddUserDto;
 import com.kodilla.moviePage.user.service.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;

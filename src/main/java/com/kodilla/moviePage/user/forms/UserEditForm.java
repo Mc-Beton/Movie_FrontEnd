@@ -1,5 +1,6 @@
-package com.kodilla.moviePage.user.domain;
+package com.kodilla.moviePage.user.forms;
 
+import com.kodilla.moviePage.user.domain.AddUserDto;
 import com.kodilla.moviePage.user.service.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -27,7 +28,7 @@ public class UserEditForm extends FormLayout {
         addClassName("user-add-form");
         validate();
 
-        add(new H2("Join us!"));
+        add(new H2("Edit user credentials"));
         add(name,surname,username,email,phoneNumber,formButtons());
 
         saveUser();

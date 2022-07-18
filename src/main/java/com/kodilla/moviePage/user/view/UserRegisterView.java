@@ -28,6 +28,7 @@ public class UserRegisterView extends VerticalLayout {
     Button back = new Button("Go back");
 
     public UserRegisterView() {
+        setAlignItems(Alignment.CENTER);
         add(new H2("JOIN US"));
         add(name,surname,username,password,email,phoneNumber,save,cancel,back);
 
