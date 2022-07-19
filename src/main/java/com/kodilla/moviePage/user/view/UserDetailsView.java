@@ -9,6 +9,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -41,7 +42,6 @@ public class UserDetailsView extends VerticalLayout {
         configureFavGrid();
         configureWatGrid();
         updateList();
-
     }
 
     private Component getContent(Grid grid) {
@@ -53,11 +53,13 @@ public class UserDetailsView extends VerticalLayout {
 
     private void configureFavGrid() {
         favGrid.addClassName("user-movie-grid");
+        add(new H3("Your Favorite Movie List"));
         configureMovieGrid(favGrid);
     }
 
     private void configureWatGrid() {
         watGrid.addClassName("user-toSee-grid");
+        add(new H3("Your Movie To Watch List"));
         configureMovieGrid(watGrid);
     }
 

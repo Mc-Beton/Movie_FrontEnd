@@ -135,7 +135,7 @@ public class MovieView extends VerticalLayout implements BeforeEnterObserver {
         button5.addClickListener(e ->
                 UI.getCurrent().navigate("management/user"));
         Button button6 = new Button("User details");
-        button5.addClickListener(e ->
+        button6.addClickListener(e ->
                 UI.getCurrent().navigate("user/details"));
 
         catogMovie.add(button1);

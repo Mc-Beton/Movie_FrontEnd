@@ -59,8 +59,7 @@ public class ImdbMovieService {
             URI url = UriComponentsBuilder
                     .fromHttpUrl("http://localhost:8080/v1/movies/movieImbd_details/" + id)
                     .build().encode().toUri();
-            ImdbMovieDetails movie = restTemplate.getForObject(url, ImdbMovieDetails.class);
-            return movie;
+            return restTemplate.getForObject(url, ImdbMovieDetails.class);
         } catch (RestClientException e) {
             return new ImdbMovieDetails();
         }
