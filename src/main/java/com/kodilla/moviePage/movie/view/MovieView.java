@@ -84,7 +84,7 @@ public class MovieView extends VerticalLayout implements BeforeEnterObserver {
         grid.addComponentColumn(details -> {
             Button button = new Button("Show details");
             button.addClickListener(clickEvent ->
-                    UI.getCurrent().navigate("movie_details/" +
+                    UI.getCurrent().navigate("movie/details/" +
                             details.getId()));
             return button;
         });
